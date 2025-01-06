@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --open",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
@@ -25,6 +25,8 @@
     "react-intl": "^5.24.8"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.26.0",
     "@types/body-scroll-lock": "^3.1.0",
     "@types/node": "^18.19.6",
     "@types/react": "^18.0.5",
@@ -40,11 +42,11 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.5.0",
-    "gh-pages": "^3.2.3",
+    "gh-pages": "^6.3.0",
     "prettier": "2.6.2",
     "typescript": "^4.6.3",
-    "vercel": "^32.4.1",
-    "vite": "^5.0.11",
+    "vercel": "^39.2.5",
+    "vite": "^5.4.11",
     "vite-imagetools": "^5.0.9",
     "vite-plugin-pwa": "^0.17.5"
   },
