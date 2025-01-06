@@ -4,20 +4,16 @@ FROM node:18-alpine AS build
 # Set working directory
 WORKDIR /usr/src/app
 
-# Copy package files and install dependencies
-COPY package*.json ./
+# Copy package files
+COPY package*.json ./ 
 
-# Install production dependencies first
-RUN npm install --production --no-cache
+# Remove existing node_modules and package-lock.json before reinstalling
+RUN rm -rf node_modules package-lock.json
 
-# Install additional development dependencies for babel presets
-RUN npm install --save-dev @babel/preset-typescript @babel/preset-react
-
-# Install vite globally
-RUN npm install -g vite
-
-# Check if vite is installed globally
-RUN npm list -g vite
+# Install all dependencies (including devDependencies) and vite globally in one step
+RUN npm install --no-cache && \
+    npm install -g vite && \
+    npm install --save-dev rollup
 
 # Stage 2: Production stage
 FROM node:18-slim
@@ -31,11 +27,8 @@ COPY --from=build /usr/src/app /usr/src/app
 # Make sure npm global packages are available in the PATH
 ENV PATH /usr/local/share/.config/yarn/global/node_modules/.bin:$PATH
 
-# Install production dependencies
-RUN npm install --production --no-cache
-
 # Expose port for the app
 EXPOSE 5173
 
-# Start the application
-CMD ["npm", "run", "dev"]
+# Start the application in development mode with --host option
+CMD ["npm", "run", "dev", "--", "--host"]
